@@ -9,19 +9,39 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "1.2.1",
+    "@fortawesome/fontawesome-svg-core": "6.4.0",
+    "@fortawesome/free-brands-svg-icons": "6.4.0",
+    "@fortawesome/pro-light-svg-icons": "6.4.0",
+    "@fortawesome/pro-regular-svg-icons": "6.4.0",
+    "@fortawesome/pro-solid-svg-icons": "6.4.0",
+    "@fortawesome/react-fontawesome": "0.2.0",
+    "@tanstack/react-query": "4.18.0",
+    "@types/lodash": "4.14.202",
+    "@types/react-beautiful-dnd": "13.1.8",
+    "i18next": "23.8.2",
+    "lodash": "4.17.21",
+    "marked": "12.0.0",
+    "next": "14.1.0",
     "react": "^18",
+    "react-beautiful-dnd": "13.1.1",
+    "react-cropper": "2.3.3",
     "react-dom": "^18",
-    "next": "14.1.0"
+    "react-i18next": "14.0.5",
+    "styled-components": "^6.1.8",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
     "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.0"
+    "typescript": "^5"
   }
 }
