@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { FlexGrid, FlexRow } from "@/components/flex-grid/FlexGrid";
 import { space } from "@/utils/space";
 import { Breadcrumbs } from "@/components/breadcrumbs/Breadcrumbs";
+import { Sidebar } from "@/components/sidebar/Sidebar";
+import { useSidebar } from "@/components/sidebar/useSidebar";
+import { useGetSidebarContent } from "@/components/sidebar/useGetsidebarContent";
+import { useStore } from "@/store/application";
 
 interface DefaultPageProps {
   title?: string;
@@ -32,6 +36,7 @@ export const DefaultPage: React.FC<DefaultPageProps> = ({
   transparent,
 }) => {
   const componentRef = React.useRef<HTMLDivElement>(null);
+  const sidebarRef = useStore.use.sidebarRef();
 
   const breadcrumbs = React.useMemo(() => {
     const crumbs = [];
@@ -41,6 +46,24 @@ export const DefaultPage: React.FC<DefaultPageProps> = ({
 
     return crumbs;
   }, [title]);
+
+  const {
+    actions: sidebarActions,
+    isSidebarVisible,
+    isSidebarExpanded,
+    handleSidebarResize,
+    sidebarWidth,
+  } = useSidebar({
+    componentRef,
+    sidebarRef,
+  });
+
+  const {
+    sidebarComponent,
+    title: sidebarTitle,
+    icon,
+    actions,
+  } = useGetSidebarContent();
 
   return (
     <StyledDefaultPage transparent={transparent}>
@@ -60,6 +83,20 @@ export const DefaultPage: React.FC<DefaultPageProps> = ({
         )}
         <FlexRow>{children}</FlexRow>
       </FlexGrid>
+      <Sidebar
+        componentRef={componentRef}
+        title={sidebarTitle}
+        icon={icon}
+        actions={[...actions, ...sidebarActions]}
+        position="right"
+        isVisible={isSidebarVisible}
+        isExpanded={isSidebarExpanded}
+        width={sidebarWidth}
+        onSizeChange={handleSidebarResize}
+        offset={{ top: `0`, bottom: "0" }}
+      >
+        {sidebarComponent}
+      </Sidebar>
     </StyledDefaultPage>
   );
 };

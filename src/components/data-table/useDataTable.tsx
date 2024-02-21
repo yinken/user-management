@@ -1,14 +1,14 @@
-import { isEmpty } from 'lodash';
-import * as React from 'react';
-import { DataTableRow, Sort } from './DataTable2';
-import { DataTableColumn } from './TH';
-import { useStore } from '@/store/application';
-import { useScrolling } from '@/hooks/useScrolling';
+import { isEmpty } from "lodash";
+import * as React from "react";
+import { DataTableRow, Sort } from "./DataTable2";
+import { DataTableColumn } from "./TH";
+import { useStore } from "@/store/application";
+import { useScrolling } from "@/hooks/useScrolling";
 
 type Params = {
   tableRef?: React.RefObject<HTMLElement>;
   tableContainerRef?: React.RefObject<HTMLElement>;
-  onSelect: (id: string) => void;
+  onSelect?: (id: string) => void;
   defaultFilter?: Record<
     string,
     {
@@ -36,7 +36,7 @@ export const useDataTable = (params: Params) => {
     tableContainerRef,
   } = params;
   const tables = useStore.use.tables();
-  const [openFilter, setOpenFilter] = React.useState('');
+  const [openFilter, setOpenFilter] = React.useState("");
   const [filters, setFilters] = React.useState<
     Record<
       string,
@@ -55,7 +55,7 @@ export const useDataTable = (params: Params) => {
   const [sort, setSort] = React.useState<Sort>(
     defaultSort || {
       columnName: columns[0].name,
-      direction: 'asc',
+      direction: "asc",
     }
   );
   const [rowsPerPage, setRowsPerPage] = React.useState<25 | 50 | 100 | 500>(25);
@@ -76,14 +76,14 @@ export const useDataTable = (params: Params) => {
 
   React.useEffect(() => {
     const container = tableContainerRef?.current;
-    const frozenTable = container?.querySelector('.is-frozen');
+    const frozenTable = container?.querySelector(".is-frozen");
     if (!frozenTable) {
       return;
     }
     if (scrollPosition.isLeft) {
-      frozenTable.classList.add('is-left');
+      frozenTable.classList.add("is-left");
     } else {
-      frozenTable.classList.remove('is-left');
+      frozenTable.classList.remove("is-left");
     }
   }, [scrollPosition.isLeft, tableContainerRef]);
 
@@ -164,9 +164,9 @@ export const useDataTable = (params: Params) => {
 
     if (row) {
       row.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
       });
     }
   };
@@ -179,11 +179,11 @@ export const useDataTable = (params: Params) => {
 
   const resizeFrozenRows = React.useCallback(() => {
     const frozenRows = document.querySelectorAll<HTMLElement>(
-      '.data-table__frozen-row'
+      ".data-table__frozen-row"
     );
     frozenRows.forEach((row) => {
       const unfrozenRow = document.getElementById(
-        `row_${row.id.split('_')[1]}`
+        `row_${row.id.split("_")[1]}`
       );
       const cellHeight = unfrozenRow?.getBoundingClientRect().height;
       row.style.height = `${cellHeight}px`;
@@ -206,10 +206,10 @@ export const useDataTable = (params: Params) => {
       const bValue = b.values[sort.columnName].sortValue;
 
       if (aValue < bValue) {
-        return sort.direction === 'asc' ? -1 : 1;
+        return sort.direction === "asc" ? -1 : 1;
       }
       if (aValue > bValue) {
-        return sort.direction === 'asc' ? 1 : -1;
+        return sort.direction === "asc" ? 1 : -1;
       }
       return 0;
     });
@@ -217,24 +217,24 @@ export const useDataTable = (params: Params) => {
     const filteredAndSorted = sorted.filter((row) => {
       return Object.entries(filters).every(([columnName, filter]) => {
         const { type, values } = filter;
-        if (type === 'search') {
+        if (type === "search") {
           const value = row.values[columnName].sortValue as string;
           const rowValue = value.toLowerCase();
           return rowValue.includes(values[0].toLowerCase());
         }
-        if (type === 'select') {
+        if (type === "select") {
           const value = row.values[columnName].sortValue as string;
           const rowValue = value.toLowerCase();
           const compareValues = values.map((value) => value.toLowerCase());
           return !compareValues.includes(rowValue);
         }
-        if (type === 'number') {
+        if (type === "number") {
           const rowValue = Number(row.values[columnName].sortValue);
           const compareValues = values.map((value) => Number(value));
 
           return rowValue >= compareValues[0] && rowValue <= compareValues[1];
         }
-        if (type === 'date') {
+        if (type === "date") {
           const rowValue = row.values[columnName].sortValue as number;
           const compareValues = values.map((value) => Number(value));
 
@@ -270,19 +270,19 @@ export const useDataTable = (params: Params) => {
     if (sort.columnName === columnName) {
       setSort({
         columnName,
-        direction: sort.direction === 'asc' ? 'desc' : 'asc',
+        direction: sort.direction === "asc" ? "desc" : "asc",
       });
     } else {
       setSort({
         columnName,
-        direction: 'asc',
+        direction: "asc",
       });
     }
   };
 
   const toggleFilter = (columnName: string) => {
     if (openFilter === columnName) {
-      setOpenFilter('');
+      setOpenFilter("");
     } else {
       setOpenFilter(columnName);
     }
@@ -290,13 +290,13 @@ export const useDataTable = (params: Params) => {
 
   const applyFilter = (columnName: string, value: string, type: string) => {
     const currentColumnFilters = filters[columnName] || {};
-    if (value === 'removeAll') {
+    if (value === "removeAll") {
       const currentFilters = { ...filters };
       delete currentFilters[columnName];
       setFilters(currentFilters);
       return;
     }
-    if (type === 'search') {
+    if (type === "search") {
       setFilters({
         ...filters,
         [columnName]: {
@@ -305,7 +305,7 @@ export const useDataTable = (params: Params) => {
         },
       });
     }
-    if (type === 'select') {
+    if (type === "select") {
       const currentValues = currentColumnFilters.values || [];
       const newValues = currentValues.includes(value)
         ? currentValues.filter((v) => v !== value)
@@ -318,8 +318,8 @@ export const useDataTable = (params: Params) => {
         },
       });
     }
-    if (type === 'number') {
-      const parsedValues = value.split(',');
+    if (type === "number") {
+      const parsedValues = value.split(",");
       setFilters({
         ...filters,
         [columnName]: {
@@ -328,8 +328,8 @@ export const useDataTable = (params: Params) => {
         },
       });
     }
-    if (type === 'date') {
-      const parsedValues = value.split(',');
+    if (type === "date") {
+      const parsedValues = value.split(",");
       setFilters({
         ...filters,
         [columnName]: {
@@ -346,7 +346,7 @@ export const useDataTable = (params: Params) => {
 
   const handleSelect = (event: React.MouseEvent, id: string) => {
     event.stopPropagation();
-    onSelect(id);
+    onSelect?.(id);
   };
 
   const handlePageSelect = (index: number) => {

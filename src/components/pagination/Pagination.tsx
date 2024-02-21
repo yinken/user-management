@@ -12,8 +12,6 @@ interface PaginationProps {
   totalPageCount: number;
 }
 
-const StyledPagination = styled(FlexGrid)``;
-
 export const Pagination: React.FC<PaginationProps> = ({
   currentPageIndex,
   totalPageCount,
@@ -30,7 +28,12 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <StyledPagination direction="row" gap={space(0.5)} alignItems="center">
+    <FlexGrid
+      gap={space(0.25)}
+      alignItems="center"
+      className="Pagination"
+      grow={0}
+    >
       <FlexColumn grow={0} justifyContent="center">
         <Text ellipsis>{t("Page")}</Text>
       </FlexColumn>
@@ -51,6 +54,6 @@ export const Pagination: React.FC<PaginationProps> = ({
           );
         })}
       </FlexColumn>
-    </StyledPagination>
+    </FlexGrid>
   );
 };

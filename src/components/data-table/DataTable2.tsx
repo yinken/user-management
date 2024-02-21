@@ -29,7 +29,7 @@ interface DataTableProps {
     plural: string;
   };
   selectedRowId?: string;
-  onSelect: (id: string) => void;
+  onSelect?: (id: string) => void;
   rows: DataTableRow[];
   columns: DataTableColumn[];
   defaultFilter?: Filters;

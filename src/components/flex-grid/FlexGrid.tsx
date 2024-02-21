@@ -1,8 +1,5 @@
-"use client";
 import * as React from "react";
 import { Container, FlexGridProps } from "./FlexGrid.css";
-
-
 
 export const FlexGrid = React.forwardRef(
   (props: FlexGridProps, ref: React.ForwardedRef<HTMLDivElement>) => {

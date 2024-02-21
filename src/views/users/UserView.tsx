@@ -10,6 +10,7 @@ import { space } from "@/utils/space";
 import { UserCard } from "@/components/user-card/UserCard";
 import { useStore } from "@/store/application";
 import { MODAL_TYPES } from "@/store/modals";
+import { SIDEBAR_TYPES } from "@/store/sidebar";
 
 interface UserViewProps {
   users: User[];
@@ -27,32 +28,29 @@ export const UserView: React.FC<UserViewProps> = ({ users }) => {
   const { i } = useIcon();
   const openModal = useStore.use.setOpen();
   const setActiveModal = useStore.use.setActiveModal();
+  const setSidebarVisible = useStore.use.setSidebarVisible();
+  const setActiveSidebar = useStore.use.setActiveSidebar();
 
   const userIds = users.map((user) => user.id);
 
   const handleEditUser = React.useCallback(
-    (id: string) => {
-      setActiveModal(MODAL_TYPES.EDIT_USER, { id });
-      openModal();
+    (user: User) => {
+      setSidebarVisible(true);
+      setActiveSidebar(SIDEBAR_TYPES.USER, user);
     },
-    [openModal, setActiveModal]
+    [setActiveSidebar, setSidebarVisible]
   );
 
-  const {
-    handleSelectAll,
-    handleSelect,
-    selectedUserIds,
-    highlightedUser,
-    setHighlightedUser,
-  } = useUserView({});
+  const { handleSelectAll, handleSelect, selectedUserIds, highlightedUser } =
+    useUserView({});
 
   const actions = React.useCallback(
-    (id: string) => {
+    (user: User) => {
       const actions = [
         {
           name: "edit",
           label: "Edit",
-          onClick: () => handleEditUser(id),
+          onClick: () => handleEditUser(user),
           icon: ICON.EDIT,
         },
         {
@@ -150,8 +148,8 @@ export const UserView: React.FC<UserViewProps> = ({ users }) => {
         name: "actions",
         label: "Actions",
         template: (item) => {
-          const id = item as string;
-          return actions(id);
+          const user = item as User;
+          return actions(user);
         },
       },
     ];
@@ -195,7 +193,7 @@ export const UserView: React.FC<UserViewProps> = ({ users }) => {
             sortValue: user.status,
           },
           actions: {
-            displayValue: user.id,
+            displayValue: user,
             sortValue: 0,
           },
         },
@@ -209,11 +207,7 @@ export const UserView: React.FC<UserViewProps> = ({ users }) => {
 
   return (
     <FlexGrid direction="column">
-      <FlexRow grow={0} gap={space(0.25)}>
-        {selectedUserIds.map((id) => (
-          <div key={id}>{id}</div>
-        ))}
-      </FlexRow>
+      <FlexRow grow={0}></FlexRow>
       <FlexRow>
         <DataTable
           tableId="users"
@@ -222,8 +216,9 @@ export const UserView: React.FC<UserViewProps> = ({ users }) => {
           columns={columns}
           showColumnControls={false}
           showFilterControls={false}
-          onSelect={setHighlightedUser}
+          onSelect={undefined}
           label={{ singular: "User", plural: "Users" }}
+          defaultSort={{ columnName: "name", direction: "asc" }}
         />
       </FlexRow>
     </FlexGrid>

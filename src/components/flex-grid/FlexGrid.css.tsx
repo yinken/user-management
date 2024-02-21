@@ -14,8 +14,7 @@ export interface FlexGridProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Container = styled.div<FlexGridProps>`
   display: flex;
   gap: ${({ gap = 0 }) => `${gap}`};
-  flex-direction: ${({ direction = "row !important" }) =>
-    `${direction} !important`};
+  flex-direction: ${({ direction = "row" }) => `${direction}`};
   justify-content: ${({ justifyContent = "flex-start" }) =>
     `${justifyContent}`};
   align-items: ${({ alignItems = "flex-start" }) => `${alignItems}`};
