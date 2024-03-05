@@ -11,13 +11,17 @@ import { colors } from "@/utils/colors";
 
 const StyledTH = styled.th<{ minWidth?: number; fixed?: boolean }>`
   font-weight: normal;
+  padding: 0;
   z-index: 20;
   margin: 0;
   position: sticky;
   top: 0;
   ${({ fixed }) => (fixed ? "left: 0" : "")};
-  background-color: var(--bg-base-2);
-  border-right: 1px solid var(--bg-base-3);
+  background-color: var(--bg-base);
+  border-bottom: 1px solid var(--bg-base-3);
+  &:not(:last-child) {
+    border-right: 1px solid var(--bg-base-3);
+  }
   transition: min-width 0.2s ease-in-out;
   min-width: ${({ minWidth }) => (minWidth ? `${minWidth}px` : "auto")};
   vertical-align: middle;

@@ -13,8 +13,9 @@ interface TDProps {
 }
 
 const StyledTD = styled.td`
-  border-right: 1px solid var(--bg-base-3);
-  border-bottom: 1px solid var(--bg-base-3);
+  &:not(:last-child) {
+    border-right: 1px solid var(--bg-base-3);
+  }
   vertical-align: top;
   transition: min-width 0.2s ease-in-out;
   > div {

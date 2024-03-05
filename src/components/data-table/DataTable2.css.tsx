@@ -4,8 +4,8 @@ import { colors, hexToRgba } from '@/utils/colors';
 import { space } from '@/utils/space';
 
 export const StyledDataTable = styled(FlexGrid)<{
-  isSelectable?: boolean;
-  contractBy?: number;
+  $isSelectable?: boolean;
+  $contractBy?: number;
 }>`
   position: relative;
   table {
@@ -26,8 +26,10 @@ export const StyledDataTable = styled(FlexGrid)<{
   a {
     text-decoration: underline;
   }
+  
   tr {
-    ${({ isSelectable }) =>
+    border-bottom: 1px solid var(--bg-base-3);
+    ${({ $isSelectable: isSelectable }) =>
       isSelectable &&
       `&:hover {
     cursor: pointer;
@@ -48,7 +50,7 @@ export const StyledDataTable = styled(FlexGrid)<{
   }
 
   .table-footer {
-    padding: 0 ${space(0.5)};
+    padding: 0 0 0 ${space(0.5)};
     border-top: 1px solid var(--color-border-2);
     background-color: var(--bg-base-2);
     z-index: 20;

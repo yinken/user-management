@@ -1,37 +1,37 @@
 import { space } from "@/utils/space";
 import styled from "styled-components";
 
-interface StyledAvatarProps {
-  isClickable?: boolean;
-  size: Size;
-  background?: string;
-  isCircle?: boolean;
-  isRounded?: boolean;
-}
-
 export enum Size {
   sm = "sm",
   md = "md",
   lg = "lg",
 }
 
-export const StyledAvatar = styled.div<StyledAvatarProps>`
-  cursor: ${(p) => (p.isClickable ? "pointer" : "auto")};
+export const StyledAvatar = styled.div<{
+  $isClickable?: boolean;
+  $size: Size;
+  $background?: string;
+  $isCircle?: boolean;
+  $isRounded?: boolean;
+}>`
+  cursor: ${(p) => (p.$isClickable ? "pointer" : "auto")};
   position: relative;
   overflow: hidden;
-  width: ${(p) => getWidth(p.size)};
-  height: ${(p) => getWidth(p.size)};
+  width: ${(p) => getWidth(p.$size)};
+  height: ${(p) => getWidth(p.$size)};
   &:hover {
     ${(p) =>
-      p.isClickable ? "opacity: 0.4; transition: opacity 0.5s ease-out 0s" : ""}
+      p.$isClickable
+        ? "opacity: 0.4; transition: opacity 0.5s ease-out 0s"
+        : ""}
   }
   font-weight: bold;
   border: 1px solid var(--color-base);
-  border-radius: ${({ isRounded }) => isRounded && space(0.25)};
-  border-radius: ${({ isCircle }) => isCircle && "9999px"};
+  border-radius: ${({ $isRounded: isRounded }) => isRounded && space(0.25)};
+  border-radius: ${({ $isCircle: isCircle }) => isCircle && "9999px"};
 
   flex-shrink: 0;
-  ${({ background }) => `background: ${background};`};
+  ${({ $background: background }) => `background: ${background};`};
 
   & > img {
     display: block;
@@ -41,10 +41,10 @@ export const StyledAvatar = styled.div<StyledAvatarProps>`
   }
 `;
 
-export const StyledDot = styled.div<{ dotSize: Size }>`
+export const StyledDot = styled.div<{ $dotSize: Size }>`
   position: absolute;
-  left: -${({ dotSize }) => (dotSize === Size.sm ? space(0.25) : space(0.125))};
-  top: -${({ dotSize }) => (dotSize === Size.sm ? space(0.25) : space(0.125))};
+  left: -${({ $dotSize: dotSize }) => (dotSize === Size.sm ? space(0.25) : space(0.125))};
+  top: -${({ $dotSize: dotSize }) => (dotSize === Size.sm ? space(0.25) : space(0.125))};
 `;
 
 export const AvatarInitials = styled.div`
@@ -57,13 +57,13 @@ export const AvatarInitials = styled.div`
   line-height: 1;
 `;
 
-export const AvatarStatusDot = styled.div<{ color: string }>`
+export const AvatarStatusDot = styled.div<{ $color: string }>`
   position: absolute;
   right: 0;
   bottom: 0;
   z-index: 2;
   border: 1px solid var(--color-base);
-  background: ${({ color }) => color};
+  background: ${({ $color: color }) => color};
   border-radius: 9999px;
   width: ${space(0.75)};
   height: ${space(0.75)};

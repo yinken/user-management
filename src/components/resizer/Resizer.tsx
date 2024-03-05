@@ -18,8 +18,8 @@ interface ResizerProps {
 const resizerSize = 3;
 
 const StyledResizer = styled.div<{
-  axis?: "x" | "y";
-  position: { x: "left" | "right"; y: "top" | "bottom" };
+  $axis?: "x" | "y";
+  $position: { x: "left" | "right"; y: "top" | "bottom" };
 }>`
   position: absolute;
   padding: 3px 0;
@@ -27,24 +27,24 @@ const StyledResizer = styled.div<{
   &:hover {
     background: ${hexToRgba(colors.skyblue60, 0.75)};
   }
-  ${({ axis }) =>
+  ${({ $axis: axis }) =>
     axis === "x" ? `height: ${resizerSize}px;` : "height: 100%;"}
-  ${({ axis }) => (axis === "x" ? "width: 100%;" : `width: ${resizerSize}px;`)}
+  ${({ $axis: axis }) => (axis === "x" ? "width: 100%;" : `width: ${resizerSize}px;`)}
 
-  ${({ axis, position }) =>
+  ${({ $axis: axis, $position: position }) =>
     axis === "x" ? `${position.x}: 0;` : `${position.y}: 0;`}
-  ${({ axis, position }) =>
+  ${({ $axis: axis, $position: position }) =>
     axis === "x" ? `${position.y}: 0;` : `${position.x}: 0;`}
 
-  ${({ axis }) =>
+  ${({ $axis: axis }) =>
     axis === "x" ? "cursor: row-resize;" : "cursor: col-resize;"}
 
 
   z-index: 1000;
   .grabber {
-    ${({ axis }) =>
+    ${({ $axis: axis }) =>
       axis === "x" ? `height: ${resizerSize}px;` : "height: 30px;"}
-    ${({ axis }) => (axis === "x" ? "width: 30px;" : `width:${resizerSize}px;`)}
+    ${({ $axis: axis }) => (axis === "x" ? "width: 30px;" : `width:${resizerSize}px;`)}
     background: ${hexToRgba(colors.skyblue60, 0.75)};
     background: ${colors.transparent};
   }
@@ -156,8 +156,8 @@ const Resizer: React.FC<ResizerProps> = ({
     <StyledResizer
       ref={resizerRef}
       onMouseDown={(event) => mouseDownListener(event)}
-      axis={axis}
-      position={position}
+      $axis={axis}
+      $position={position}
     >
       <div className="grabber" onDoubleClick={() => handleDoubleClick()}></div>
     </StyledResizer>

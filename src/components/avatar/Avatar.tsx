@@ -54,13 +54,13 @@ export const Avatar: React.FC<AvatarProps> = ({
     >
       <StyledAvatar
         {...props}
-        isClickable={isClickable}
+        $isClickable={isClickable}
         onClick={onClick}
         data-testid={props["data-testid"]}
-        size={size}
-        background={background}
-        isCircle={isCircle}
-        isRounded={isRounded}
+        $size={size}
+        $background={background}
+        $isCircle={isCircle}
+        $isRounded={isRounded}
       >
         {avatarUrl && <img src={avatarUrl} alt={altTitle} />}
         {displayInitials && title && (
@@ -75,7 +75,7 @@ export const Avatar: React.FC<AvatarProps> = ({
               something: mapUserStatusToName(status),
             }) as string
           }
-          color={statusColors[status]}
+          $color={statusColors[status]}
           className={"avatar-status " + status}
         />
       )}

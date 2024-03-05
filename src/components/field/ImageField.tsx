@@ -97,8 +97,6 @@ export const ImageField = React.forwardRef(
                     width: "150px",
                     overflow: "hidden",
                     border: "1px solid var(--color-base-3)",
-                    marginTop: space(0.25),
-                    marginBottom: space(0.25),
                   }}
                 >
                   {currentValue ? (

@@ -1,7 +1,12 @@
 import { StoreApi } from "zustand";
 
+
 export enum MODAL_TYPES {
-  EDIT_USER = "EDIT_USER",
+  ADD_USER = "ADD_USER",
+  USER = "USER",
+  BULK_EDIT_WIDGET = "BULK_EDIT_WIDGET",
+  BULK_EDIT_USER = "BULK_EDIT_USER",
+  ADD_WIDGETS = "ADD_WIDGETS",
 }
 
 export interface ModalStore {

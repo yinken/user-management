@@ -12,7 +12,8 @@ export type Sidebar = {
   width?: number;
 };
 
-const SIDEBAR_WIDTH = window.innerWidth / 2;
+const SIDEBAR_WIDTH =
+  typeof window !== "undefined" ? window.innerWidth / 3 : 600;
 
 export enum SIDEBAR_TYPES {
   CONVERSATION = "conversation",

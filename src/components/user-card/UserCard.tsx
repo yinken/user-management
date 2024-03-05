@@ -7,6 +7,7 @@ import { getBackgroundColorFromString } from "@/utils/avatar";
 import { truncate } from "@/utils/strings";
 import { Text } from "../text/Text";
 import { Size } from "../avatar/Avatar.css";
+import { USER_STATUS_TYPES } from "@/types";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   inlineComponent?: React.ReactNode;
@@ -20,12 +21,13 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   };
   user: {
     name: string;
-    avatar: string;
+    avatar?: string;
+    status?: USER_STATUS_TYPES;
   };
   timestring?: string;
 }
 
-const StyledUserCard = styled.div<Props>`
+const StyledUserCard = styled.div`
   width: 100%;
   display: flex;
   .time {
@@ -36,8 +38,9 @@ const StyledUserCard = styled.div<Props>`
 
 export const UserCard: React.FC<Props> = (props) => {
   const { inlineComponent, user, timestring, children } = props;
+
   return (
-    <StyledUserCard {...props}>
+    <StyledUserCard>
       <FlexGrid gap={space(0.5)} alignItems="center" title={user.name ?? ""}>
         <FlexColumn className="user-avatar" shrink={0} grow={0}>
           <Avatar
@@ -45,6 +48,7 @@ export const UserCard: React.FC<Props> = (props) => {
             title={user.name ?? ""}
             avatarUrl={user.avatar ?? ""}
             background={getBackgroundColorFromString(user.name ?? "")}
+            status={user.status}
           />
         </FlexColumn>
         {user.name && (

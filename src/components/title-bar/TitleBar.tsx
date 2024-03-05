@@ -30,14 +30,14 @@ export type TitleBarAction = {
 };
 
 const StyledTitleBar = styled.div<{
-  color?: string;
-  variant: "default" | "danger";
+  $color?: string;
+  $variant: "default" | "danger";
 }>`
   width: 100%;
   position: relative;
-  color: ${({ variant, color }) =>
+  color: ${({ $variant: variant, $color: color }) =>
     color ? color : variantColors[variant].color};
-  background: ${({ variant }) => variantColors[variant].background}; 
+  background: ${({ $variant: variant }) => variantColors[variant].background}; 
 
   .title-bar {
     .title {
@@ -78,8 +78,8 @@ export const TitleBar: React.FC<TitleBarProps> = ({
     <StyledTitleBar
       onClick={onClick}
       onDoubleClick={onDoubleClick}
-      color={color}
-      variant={variant}
+      $color={color}
+      $variant={variant}
     >
       <FlexGrid
         alignItems="center"

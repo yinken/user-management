@@ -1,17 +1,16 @@
-
-import * as React from 'react';
-import styled from 'styled-components';
-import { FlexGrid, FlexRow } from '../flex-grid/FlexGrid';
-import { TitleBar } from '../title-bar/TitleBar';
-import Resizer from '../resizer/Resizer';
-import { SidebarAction } from './useSidebar';
-import { colors, hexToRgba } from '@/utils/colors';
-import { useStore } from '@/store/application';
-import { space } from '@/utils/space';
-import { ICON } from '../icon/useIcon';
+import * as React from "react";
+import styled from "styled-components";
+import { FlexGrid, FlexRow } from "../flex-grid/FlexGrid";
+import { TitleBar } from "../title-bar/TitleBar";
+import Resizer from "../resizer/Resizer";
+import { SidebarAction } from "./useSidebar";
+import { colors, hexToRgba } from "@/utils/colors";
+import { useStore } from "@/store/application";
+import { space } from "@/utils/space";
+import { ICON } from "../icon/useIcon";
 
 interface SidebarProps {
-  position: 'left' | 'right';
+  position: "left" | "right";
   isVisible?: boolean;
   isExpanded?: boolean;
   children: React.ReactNode;
@@ -28,38 +27,47 @@ interface SidebarProps {
   onSizeChange?: (size: number) => void;
 }
 
-const StyledSidebar = styled.div<SidebarProps>`
+const StyledSidebar = styled.div<{
+  $position: "left" | "right";
+  $isVisible?: boolean;
+  $isExpanded?: boolean;
+  $width: number;
+  $offset?: {
+    top: string | number;
+    bottom: string | number;
+  };
+}>`
   position: fixed;
-  top: ${({ offset }) => (offset?.top ? offset.top : 0)};
-  bottom: ${({ offset }) => (offset?.bottom ? offset.bottom : 0)};
-  width: ${({ width }) => `${width}px`};
-  background-color: var(--bg-base-2);
+  top: ${({ $offset: offset }) => (offset?.top ? offset.top : 0)};
+  bottom: ${({ $offset: offset }) => (offset?.bottom ? offset.bottom : 0)};
+  width: ${({ $width: width }) => `${width}px`};
+  background-color: var(--bg-base);
   z-index: 1000;
 
-  ${({ position }) => position}: 0;
-  transform: ${({ isVisible, position }) =>
+  ${({ $position: position }) => position}: 0;
+  transform: ${({ $isVisible: isVisible, $position: position }) =>
     isVisible
-      ? 'translateX(0)'
-      : `translateX(${position === 'left' ? '-' : ''}100%)`};
+      ? "translateX(0)"
+      : `translateX(${position === "left" ? "-" : ""}100%)`};
 
   pointer-events: all;
   .sidebar-content {
     padding: 0;
   }
-  box-shadow: ${({ isVisible, position }) => {
+  box-shadow: ${({ $isVisible: isVisible, $position: position }) => {
     if (!isVisible) {
-      return 'none';
+      return "none";
     }
-    if (position === 'left') {
+    if (position === "left") {
       return `0 0 5px ${hexToRgba(colors.black, 0.2)}`;
     }
     return `-5px 0 5px ${hexToRgba(colors.black, 0.2)}`;
   }};
-  border: ${({ isVisible, position }) => {
+  border: ${({ $isVisible: isVisible, $position: position }) => {
     if (!isVisible) {
-      return 'none';
+      return "none";
     }
-    if (position === 'left') {
+    if (position === "left") {
       return `1px solid var(--color-border-2)`;
     }
     return `1px solid var(--color-border-2)`;
@@ -94,22 +102,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <StyledSidebar
       ref={sidebarRef}
-      position={position}
-      isVisible={isVisible}
-      isExpanded={isExpanded}
-      width={width}
-      offset={offset}
+      $position={position}
+      $isVisible={isVisible}
+      $isExpanded={isExpanded}
+      $width={width}
+      $offset={offset}
     >
       <FlexGrid
-        direction='column'
+        direction="column"
         style={{
-          position: 'relative',
+          position: "relative",
           borderBottom: `1px solid var(--color-border-2)`,
         }}
       >
         <Resizer
-          axis='y'
-          position={{ x: position === 'right' ? 'left' : 'right', y: 'top' }}
+          axis="y"
+          position={{ x: position === "right" ? "left" : "right", y: "top" }}
           onChange={(change) => {
             onSizeChange?.(change);
           }}
@@ -126,21 +134,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               borderBottom: `1px solid var(--color-border-2)`,
             }}
           >
-            <TitleBar
-              icon={icon}
-              title={title}
-              actions={actions}
-            />
+            <TitleBar icon={icon} title={title} actions={actions} />
           </FlexRow>
         )}
+        <FlexRow grow={0} gap={space(0.25)}></FlexRow>
         <FlexRow
-          grow={0}
-          gap={space(0.25)}
-        ></FlexRow>
-        <FlexRow
-          className='sidebar-content'
+          className="sidebar-content"
           style={{
-            overflowY: 'auto',
+            overflowY: "auto",
+            overflowX: "hidden",
           }}
         >
           {children}

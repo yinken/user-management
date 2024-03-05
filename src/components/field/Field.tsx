@@ -13,7 +13,7 @@ import { ImageField } from "./ImageField";
 import { FlexColumn, FlexGrid } from "../flex-grid/FlexGrid";
 import { SwitchField } from "./SwitchField";
 import { space } from "@/utils/space";
-import { colors } from "@/utils/colors";
+import { colors, hexToRgba } from "@/utils/colors";
 import { ICON, useIcon } from "../icon/useIcon";
 import { useHighlightSearchTerm } from "@/hooks/useHighlightSearchTerm";
 
@@ -83,20 +83,10 @@ const StyledField = styled(FlexGrid)<{
   ${({ alternateColumns }) =>
     alternateColumns &&
     `&:nth-child(odd) {
-      background: var(--bg-base-2);
-      input,
-      select,
-      textarea {
-        background: var(--bg-base-2);
-      }
+      background: ${hexToRgba(colors.black, 0.05)};
     }
     &:nth-child(even) {
-      background: var(--bg-base-3);
-      input,
-      select,
-      textarea {
-        background: var(--bg-base-3);
-      }
+      background: ${hexToRgba(colors.black, 0.1)};
     }`}
   .custom-label {
     overflow: hidden;
@@ -129,7 +119,7 @@ const StyledField = styled(FlexGrid)<{
     text-overflow: ellipsis;
     max-width: 100%;
     overflow: hidden;
-    padding: ${space(0.25)} 0 0 ${space(0.25)};
+    padding: ${space(0.25)} ${space(0.25)} 0 ${space(0.25)};
   }
   .radio-options,
   .checkbox {
@@ -209,9 +199,13 @@ const StyledField = styled(FlexGrid)<{
   textarea {
     margin: 0;
     border: 0;
-    background: var(--bg-base-1);
+    background: ${hexToRgba(colors.black, 0.1)};
     color: ${COLOR_VAR};
     height: ${space(2)};
+    padding-left: ${space(0.25)};
+    &:focus {
+      outline: none;
+    }
   }
   input[type='text'],
   input[type='file'],
@@ -220,6 +214,9 @@ const StyledField = styled(FlexGrid)<{
   }
   input[type='text'],
   input[type='file'],
+  input[type='number'],
+  input[type='password'],
+  input[type='email'],
   textarea {
     width: 100%;
   }
@@ -346,7 +343,7 @@ export const Field = React.forwardRef<HTMLInputElement, FieldProps>(
     >(
       (type) => {
         const inputFieldTypes = Object.values(INPUT_FIELD_TYPES);
-        const { value, defaultValue, options, onChange } = props;
+        const { value, defaultValue, options, onChange, name } = props;
         const r = ref as React.MutableRefObject<HTMLInputElement>;
 
         if (inputFieldTypes.includes(type as INPUT_FIELD_TYPES)) {
@@ -354,7 +351,7 @@ export const Field = React.forwardRef<HTMLInputElement, FieldProps>(
             <InputField
               {...props}
               ref={r}
-              value={value.toString()}
+              value={value?.toString()}
               type={type as INPUT_FIELD_TYPES}
               onChange={onChange}
             />

@@ -9,6 +9,7 @@ type Params = {
   tableRef?: React.RefObject<HTMLElement>;
   tableContainerRef?: React.RefObject<HTMLElement>;
   onSelect?: (id: string) => void;
+  paginate?: boolean;
   defaultFilter?: Record<
     string,
     {
@@ -27,6 +28,7 @@ export const useDataTable = (params: Params) => {
   const {
     onSelect,
     defaultFilter,
+    paginate,
     defaultSort,
     selectedRowId,
     tableRef,
@@ -58,7 +60,9 @@ export const useDataTable = (params: Params) => {
       direction: "asc",
     }
   );
-  const [rowsPerPage, setRowsPerPage] = React.useState<25 | 50 | 100 | 500>(25);
+  const [rowsPerPage, setRowsPerPage] = React.useState<0 | 25 | 50 | 100 | 500>(
+    paginate ? 25 : 0
+  );
   const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
   const [hiddenColumns, setHiddenColumns] = React.useState<DataTableColumn[]>(
     []
@@ -243,10 +247,13 @@ export const useDataTable = (params: Params) => {
       });
     });
 
-    const paginated = filteredAndSorted.slice(
-      currentPageIndex * rowsPerPage,
-      (currentPageIndex + 1) * rowsPerPage
-    );
+    const paginated =
+      rowsPerPage === 0
+        ? filteredAndSorted
+        : filteredAndSorted.slice(
+            currentPageIndex * rowsPerPage,
+            (currentPageIndex + 1) * rowsPerPage
+          );
 
     return {
       sorted,

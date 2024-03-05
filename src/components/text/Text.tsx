@@ -8,8 +8,8 @@ interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
   uppercase?: boolean;
   ellipsis?: boolean | string;
   size?: "L" | "M" | "S" | "XS" | "XXS";
-  as?: React.ElementType;
   width?: string;
+  as?: React.ElementType;
   children: React.ReactNode;
 }
 
@@ -37,9 +37,16 @@ const sizes = {
   `,
 };
 
-const StyledText = styled.span<TextProps>`
-  ${({ size = "S" }) => sizes[size]};
-  ${({ ellipsis, width }) =>
+const StyledText = styled.span<{
+  $bold?: boolean;
+  $italic?: boolean;
+  $uppercase?: boolean;
+  $ellipsis?: boolean | string;
+  $size?: "L" | "M" | "S" | "XS" | "XXS";
+  $width?: string;
+}>`
+  ${({ $size: size = "S" }) => sizes[size]};
+  ${({ $ellipsis: ellipsis, $width: width }) =>
     ellipsis &&
     `
     display: inline-block;
@@ -49,9 +56,9 @@ const StyledText = styled.span<TextProps>`
     white-space: nowrap;
     word-wrap: normal;
     `};
-  font-weight: ${({ bold }) => bold && 700};
-  font-style: ${({ italic }) => italic && "italic"};
-  text-transform: ${({ uppercase }) => uppercase && "uppercase"};
+  font-weight: ${({ $bold: bold }) => bold && 700};
+  font-style: ${({ $italic: italic }) => italic && "italic"};
+  text-transform: ${({ $uppercase: uppercase }) => uppercase && "uppercase"};
   margin: 0;
   padding: 0;
 `;
@@ -69,12 +76,12 @@ export const Text: React.FC<TextProps> = ({
   return (
     <StyledText
       as={as}
-      bold={bold}
-      italic={italic}
-      uppercase={uppercase}
-      ellipsis={ellipsis}
-      size={size}
-      width={width}
+      $bold={bold}
+      $italic={italic}
+      $uppercase={uppercase}
+      $ellipsis={ellipsis}
+      $size={size}
+      $width={width}
     >
       {children}
     </StyledText>

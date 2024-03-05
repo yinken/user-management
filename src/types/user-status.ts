@@ -1,16 +1,14 @@
-import { DocumentData } from 'firebase/firestore';
-
 export enum USER_STATUS_CHANGE_TYPES {
-  AUTO = 'AUTO',
-  CONNECTION_LOSS = 'CONNECTION_LOSS',
-  END_SESSION = 'END_SESSION',
-  SYNC = 'SYNC',
+  AUTO = "AUTO",
+  CONNECTION_LOSS = "CONNECTION_LOSS",
+  END_SESSION = "END_SESSION",
+  SYNC = "SYNC",
 }
 
 export enum USER_STATUS_TYPES {
-  ONLINE = 'online',
-  PAUSE = 'pause',
-  OFFLINE = 'offline',
+  ONLINE = "online",
+  PAUSE = "pause",
+  OFFLINE = "offline",
 }
 
 /**
@@ -23,7 +21,7 @@ export enum USER_STATUS_TYPES {
  *   statusChangeType: 'END_SESSION'
  * }
  */
-export interface UserStatus extends DocumentData {
+export interface UserStatus {
   email: string;
   status: USER_STATUS_TYPES;
   // Possible reason of status change.

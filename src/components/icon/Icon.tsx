@@ -41,28 +41,28 @@ export interface IconProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export const StyledIcon = styled.span<{
-  library: IconPrefix | "custom" | "weather";
-  color?: string;
-  size?: IconProps["size"];
-  inline?: boolean;
+  $library: IconPrefix | "custom" | "weather";
+  $color?: string;
+  $size?: IconProps["size"];
+  $inline?: boolean;
 }>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  ${({ library, size }) =>
+  ${({ $library: library, $size: size }) =>
     ["fas", "fal", "fab", "far", "custom", "weather"].includes(library) &&
     `min-width: ${size === "xs" ? space(1.5) : space(2)}`};
-  min-height: ${({ size }) => (size === "xs" ? space(1) : space(2))}};
+  min-height: ${({ $size: size }) => (size === "xs" ? space(1) : space(2))}};
   position: relative;
   flex-shrink: 0;
 
-  ${({ inline }) =>
+  ${({ $inline: inline }) =>
     inline &&
     `min-height: ${space(1)};
      min-width: ${space(1)};
   `}
   svg {
-    color: ${({ color }) => (color ? `${color} !important;` : "inherit")};
+    color: ${({ $color: color }) => (color ? `${color} !important;` : "inherit")};
     overflow: visible;
     box-sizing: content-box;
     inset: 0;
@@ -82,11 +82,11 @@ export const Icon: React.FC<IconProps> = (props): JSX.Element => {
 
   return (
     <StyledIcon
-      library={library}
+      $library={library}
       className={`${className} icon`}
-      color={color}
-      size={size}
-      inline={inline}
+      $color={color}
+      $size={size}
+      $inline={inline}
     >
       {["fas", "fal", "fab", "far"].includes(library) && (
         <FontAwesomeIcon

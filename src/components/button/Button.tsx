@@ -1,3 +1,4 @@
+"use client";
 import { hexToRgba } from "@/utils/colors";
 import { space } from "@/utils/space";
 import * as React from "react";
@@ -86,40 +87,40 @@ const alignment = {
 };
 
 const StyledButton = styled.button.attrs({ className: "ui-button" })<{
-  variant: Variant;
-  hasBorder: boolean;
-  isRounded: boolean;
-  isActive: boolean;
-  isSquare: boolean;
-  disabled: boolean;
-  expand: boolean;
-  align: "left" | "center" | "right";
-  isCircle: boolean;
-  direction: "row" | "column";
-  progress: number;
-  size: "sm" | "md" | "lg";
+  $variant: Variant;
+  $hasBorder: boolean;
+  $isRounded: boolean;
+  $isActive: boolean;
+  $isSquare: boolean;
+  $disabled: boolean;
+  $expand: boolean;
+  $align: "left" | "center" | "right";
+  $isCircle: boolean;
+  $direction: "row" | "column";
+  $progress: number;
+  $size: "sm" | "md" | "lg";
 }>`
   position: relative;
   margin: 0;
   border-style: solid;
-  padding: ${({ isSquare, size }) => getPadding(size, isSquare)};
+  padding: ${({ $isSquare, $size }) => getPadding($size, $isSquare)};
 
-  background-color: ${({ isActive, variant }) =>
-    isActive ? variantColors[variant].background : "transparent"};
-  border-color: ${({ hasBorder, variant }) =>
-    hasBorder ? variantColors[variant].background : "transparent"};
+  background-color: ${({ $isActive, $variant: $variant }) =>
+    $isActive ? variantColors[$variant].background : "transparent"};
+  border-color: ${({ $hasBorder: $hasBorder, $variant: $variant }) =>
+    $hasBorder ? variantColors[$variant].background : "transparent"};
 
-  color: ${({ isActive, variant }) =>
-    isActive
-      ? variantColors[variant].color
-      : variantColors[variant].background};
+  color: ${({ $isActive, $variant: $variant }) =>
+    $isActive
+      ? variantColors[$variant].color
+      : variantColors[$variant].background};
 
   border-width: 1px 1px 1px 0;
   display: inline-flex;
-  flex-direction: ${({ direction }) => direction};
+  flex-direction: ${({ $direction }) => $direction};
   gap: ${space(0.25)};
   align-items: center;
-  justify-content: ${({ align }) => alignment[align]};
+  justify-content: ${({ $align }) => alignment[$align]};
   white-space: nowrap;
   z-index: 1;
   pointer-events: all;
@@ -130,7 +131,7 @@ const StyledButton = styled.button.attrs({ className: "ui-button" })<{
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: ${({ isSquare }) => (isSquare ? "auto" : "100%")};
+    min-height: ${({ $isSquare }) => ($isSquare ? "auto" : "100%")};
     align-items: center;
     gap: ${space(0.25)};
     .icon {
@@ -140,22 +141,22 @@ const StyledButton = styled.button.attrs({ className: "ui-button" })<{
   }
 
   &:first-of-type {
-    border-top-left-radius: ${({ isRounded }) =>
-      isRounded ? space(0.125) : "0"};
-    border-bottom-left-radius: ${({ isRounded }) =>
-      isRounded ? space(0.125) : "0"};
+    border-top-left-radius: ${({ $isRounded }) =>
+      $isRounded ? space(0.125) : "0"};
+    border-bottom-left-radius: ${({ $isRounded }) =>
+      $isRounded ? space(0.125) : "0"};
     border-right-width: 1px;
     border-left-width: 1px;
   }
   &:last-of-type {
-    border-top-right-radius: ${({ isRounded }) =>
-      isRounded ? space(0.125) : "0"};
-    border-bottom-right-radius: ${({ isRounded }) =>
-      isRounded ? space(0.125) : "0"};
+    border-top-right-radius: ${({ $isRounded }) =>
+      $isRounded ? space(0.125) : "0"};
+    border-bottom-right-radius: ${({ $isRounded }) =>
+      $isRounded ? space(0.125) : "0"};
     border-right-width: 1px;
   }
   &:only-of-type {
-    border-radius: ${({ isRounded }) => (isRounded ? space(0.125) : "0")};
+    border-radius: ${({ $isRounded }) => ($isRounded ? space(0.125) : "0")};
     border-right-width: 1px;
     border-width: 1px;
   }
@@ -166,23 +167,23 @@ const StyledButton = styled.button.attrs({ className: "ui-button" })<{
     cursor: not-allowed;`}
 
   min-height: ${({
-    isSquare,
-    size,
+    $isSquare,
+    $size,
   }: {
-    isSquare: boolean;
-    size: "sm" | "md" | "lg";
-  }) => (isSquare ? "auto" : getHeight(size))};
-  height: ${({ isSquare, size }) => (isSquare ? getHeight(size) : "auto")};
-  width: ${({ isSquare, expand, size }) =>
-    isSquare ? getHeight(size) : expand ? "100%" : "auto"};
+    $isSquare: boolean;
+    $size: "sm" | "md" | "lg";
+  }) => ($isSquare ? "auto" : getHeight($size))};
+  height: ${({ $isSquare, $size }) => ($isSquare ? getHeight($size) : "auto")};
+  width: ${({ $isSquare, $expand, $size }) =>
+    $isSquare ? getHeight($size) : $expand ? "100%" : "auto"};
 
-  ${({ isCircle }) => isCircle && "border-radius: 9999px !important;"}
+  ${({ $isCircle }) => $isCircle && "border-radius: 9999px !important;"}
 
   &:hover {
-    background-color: ${({ isActive, variant }) =>
-      isActive
-        ? variantColors[variant].background
-        : hexToRgba(variantColors[variant].background, 0.25)};
+    background-color: ${({ $isActive, $variant: $variant }) =>
+      $isActive
+        ? variantColors[$variant].background
+        : hexToRgba(variantColors[$variant].background, 0.25)};
   }
 
   .progress {
@@ -190,9 +191,9 @@ const StyledButton = styled.button.attrs({ className: "ui-button" })<{
     top: 0;
     left: 0;
     height: 100%;
-    width: ${({ progress }) => progress}%;
-    background-color: ${({ variant }) =>
-      hexToRgba(variantColors[variant].background, 0.5)};
+    width: ${({ $progress }) => $progress}%;
+    background-color: ${({ $variant: $variant }) =>
+      hexToRgba(variantColors[$variant].background, 0.5)};
     border-radius: 0;
     mix-blend-mode: multiply;
   }
@@ -236,25 +237,25 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <StyledButton
       className={className}
-      style={style}
+      $style={style}
       title={title}
-      hasBorder={hasBorder}
-      variant={variant}
+      $hasBorder={hasBorder}
+      $variant={variant}
       onClick={(event: React.MouseEvent) => handleClick(event)}
-      isRounded={isRounded}
-      isCircle={isCircle}
-      isActive={isActive}
-      isSquare={isSquare}
+      $isRounded={isRounded}
+      $isCircle={isCircle}
+      $isActive={isActive}
+      $isSquare={isSquare}
       disabled={disabled}
-      expand={expand}
-      align={align}
+      $expand={expand}
+      $align={align}
       as={as}
       href={href}
       target={target}
       rel={rel}
-      htmlRole="button"
-      progress={progress || 0}
-      size={size}
+      $htmlRole="button"
+      $progress={progress || 0}
+      $size={size}
     >
       {progress && <div className="progress" />}
       <div className="button-content">{children}</div>

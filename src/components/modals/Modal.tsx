@@ -30,7 +30,7 @@ interface StyledModalProps {
 }
 
 const StyledModal = styled.div<StyledModalProps>`
-  background: var(--bg-base-2);
+  background: white;
   position: relative;
   z-index: 2001;
   overflow: hidden;

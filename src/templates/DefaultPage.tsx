@@ -26,7 +26,9 @@ const StyledDefaultPage = styled(FlexGrid)<{ transparent?: boolean }>`
   `};
   z-index: 1;
   .content {
-    transition: padding-right 0s ease-in-out, padding-left 0s ease-in-out;
+    transition:
+      padding-right 0s ease-in-out,
+      padding-left 0s ease-in-out;
   }
 `;
 
@@ -62,7 +64,6 @@ export const DefaultPage: React.FC<DefaultPageProps> = ({
     sidebarComponent,
     title: sidebarTitle,
     icon,
-    actions,
   } = useGetSidebarContent();
 
   return (
@@ -87,7 +88,7 @@ export const DefaultPage: React.FC<DefaultPageProps> = ({
         componentRef={componentRef}
         title={sidebarTitle}
         icon={icon}
-        actions={[...actions, ...sidebarActions]}
+        actions={[...sidebarActions]}
         position="right"
         isVisible={isSidebarVisible}
         isExpanded={isSidebarExpanded}

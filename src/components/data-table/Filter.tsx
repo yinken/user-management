@@ -8,6 +8,7 @@ import { convertTimestampToDateString } from "@/utils/date";
 import { determineSingularOrPlural } from "@/utils/translation";
 import { useIcon, ICON } from "../icon/useIcon";
 import { space } from "@/utils/space";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 export type Filter = {
   type: string;
